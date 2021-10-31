@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "defaultFile": "contracts/",
+  "environment": "solidity",
+  "setupCommands": ["npm i", "npx hardhat compile"],
+  "compileCommand": "npx hardhat compile",
+  "tests": [
+  ],
+  "learnerAccessibleFileList": ["contracts/*"]
+}
