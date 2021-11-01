@@ -1,10 +1,11 @@
 {
   "version": "1.0.0",
-  "defaultFile": "contracts/",
+  "defaultFile": "contracts/CallingParentContracts.sol",
   "environment": "solidity",
   "setupCommands": ["npm i", "npx hardhat compile"],
   "compileCommand": "npx hardhat compile",
   "tests": [
+    { "itShould": "Compile", "command": "sh learn_tests/73.sh" }
   ],
   "learnerAccessibleFileList": ["contracts/*"]
 }
