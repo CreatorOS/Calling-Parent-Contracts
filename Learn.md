@@ -1,25 +1,11 @@
 # Calling Parent Contracts
 
-Parent contracts can be called directly, or by using the keyword `super`.
-
-By using the keyword `super`, all of the immediate parent contracts will be called.
+Let's create a Parent contract `A`:
+Here, we are using an `event` `Log` to emit logs.
+In our case, this will be useful for tracing function calls.
 
 ```
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.3;
-
-/* Inheritance tree
-   A
- /  \
-B   C
- \ /
-  D
-*/
-
 contract A {
-    // This is called an event. You can emit events from your function
-    // and they are logged into the transaction log.
-    // In our case, this will be useful for tracing function calls.
     event Log(string message);
 
     function foo() public virtual {
@@ -30,7 +16,17 @@ contract A {
         emit Log("A.bar called");
     }
 }
+```
 
+## Calling parent contract functions
+
+Parent contracts can be called directly, or by using the keyword `super`.
+
+By using the keyword `super`, all of the immediate parent contracts will be called.
+
+Code up these contracts:
+
+```
 contract B is A {
     function foo() public virtual override {
         emit Log("B.foo called");
@@ -54,14 +50,14 @@ contract C is A {
         super.bar();
     }
 }
+```
 
-contract D is B, C {
-    // Try:
-    // - Call D.foo and check the transaction logs.
-    //   Although D inherits A, B and C, it only called C and then A.
-    // - Call D.bar and check the transaction logs
-    //   D called C, then B, and finally A.
-    //   Although super was called twice (by B and C) it only called A once.
+## Testing the order of function calls
+
+Code this last contract and then we will test the order of function calls:
+
+```
+contract DCPC is B, C {
 
     function foo() public override(B, C) {
         super.foo();
@@ -72,3 +68,11 @@ contract D is B, C {
     }
 }
 ```
+
+Hit `Run` and then check the output logs.
+
+- Check log of call `DCPC.foo()` in 2nd test output.
+  - Although DCPC inherits A, B and C, it only called C and then A.
+- Check log of call `DCPC.bar()` in 3rd test output.
+  - DCPC called C, then B, and finally A.
+  - Although super was called twice (by B and C) it only called A once.
