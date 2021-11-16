@@ -3,6 +3,7 @@
   "defaultFile": "contracts/CallingParentContracts.sol",
   "environment": "solidity",
   "setupCommands": [
+    "npm i",
     "npx hardhat compile"
   ],
   "compileCommand": "npx hardhat compile",
